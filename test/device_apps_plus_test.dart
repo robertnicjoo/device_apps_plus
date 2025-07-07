@@ -26,7 +26,9 @@ class MockDeviceAppsPlusPlatform
 
   @override
   Future<bool> openApp(String packageName) async {
-    return packageName.contains("installed"); // Simulate only some apps are openable
+    return packageName.contains(
+      "installed",
+    ); // Simulate only some apps are openable
   }
 }
 

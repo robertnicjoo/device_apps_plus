@@ -42,14 +42,15 @@ class _MyAppState extends State<MyApp> {
     try {
       platformVersion =
           await _deviceAppsPlusPlugin.getPlatformVersion() ??
-              'Unknown platform version';
+          'Unknown platform version';
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }
 
     try {
-      isHolyBibleInstalled =
-      await _deviceAppsPlusPlugin.isAppInstalled(singleApp);
+      isHolyBibleInstalled = await _deviceAppsPlusPlugin.isAppInstalled(
+        singleApp,
+      );
       multiCheck = await _deviceAppsPlusPlugin.checkMultiple(multipleApps);
     } catch (e) {
       debugPrint("Error during app check: $e");
@@ -58,7 +59,8 @@ class _MyAppState extends State<MyApp> {
     if (!mounted) return;
 
     setState(() {
-      _outputText = '''
+      _outputText =
+          '''
 Platform: $platformVersion
 
 ✅ isAppInstalled('$singleApp') = $isHolyBibleInstalled
@@ -74,7 +76,9 @@ ${multiCheck.entries.map((e) => '${e.key}: ${e.value ? "✔️" : "❌"}').join(
     if (!success) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Holy Bible app not installed or can't be opened.")),
+        const SnackBar(
+          content: Text("Holy Bible app not installed or can't be opened."),
+        ),
       );
     }
   }
