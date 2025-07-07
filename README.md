@@ -13,6 +13,7 @@ A Flutter plugin to check whether specific Android apps are installed on the use
 
 - `isAppInstalled(String packageName)` – Check if a specific app is installed
 - `checkMultiple(List<String> packageNames)` – Efficiently check multiple apps at once
+- `openApp(String packageName)` – Launch an installed app from your Flutter code (added in 1.0.2)
 
 ---
 
@@ -24,7 +25,7 @@ In your app's `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  device_apps_plus: ^1.0.0
+  device_apps_plus: ^1.0.2
 ```
 
 ### 2. Use the Plugin
@@ -39,15 +40,18 @@ bool installed = await checker.isAppInstalled("irando.co.id.holy_bible");
 
 // Multiple apps
 final results = await checker.checkMultiple([
-  "irando.co.id.holy_bible",
-  "com.facebook.katana",
-  "com.instagram.android",
-  "com.nonexistent.app",
+    "irando.co.id.holy_bible",
+    "com.facebook.katana",
+    "com.instagram.android",
+    "com.nonexistent.app",
 ]);
 
 results.forEach((pkg, isInstalled) {
-  print('$pkg: ${isInstalled ? "Installed" : "Not Installed"}');
+  debugPrint('$pkg: ${isInstalled ? "Installed" : "Not Installed"}');
 });
+
+// Open an installed app (returns false if not found)
+bool opened = await checker.openApp("irando.co.id.holy_bible");
 ```
 
 ---
@@ -83,7 +87,7 @@ To support app queries on Android 11+ (API 30+), add the following to your `Andr
 ## 🧪 Example Output
 
 ```
-Platform: Android 14
+Platform: Android 15
 
 ✅ isAppInstalled('irando.co.id.holy_bible') = true
 

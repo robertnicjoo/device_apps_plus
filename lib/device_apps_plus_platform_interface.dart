@@ -34,4 +34,8 @@ abstract class DeviceAppsPlusPlatform extends PlatformInterface {
   Future<Map<String, bool>> checkMultiple(List<String> packageNames) {
     throw UnimplementedError('checkMultiple() has not been implemented.');
   }
+
+  Future<bool> openApp(String packageName) {
+    throw UnimplementedError('openApp() has not been implemented.');
+  }
 }

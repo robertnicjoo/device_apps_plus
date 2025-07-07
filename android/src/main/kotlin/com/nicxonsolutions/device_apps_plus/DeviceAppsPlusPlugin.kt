@@ -1,20 +1,24 @@
 package com.nicxonsolutions.device_apps_plus
 
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
-import android.content.pm.PackageManager
 
 class DeviceAppsPlusPlugin : FlutterPlugin, MethodCallHandler {
   private lateinit var channel: MethodChannel
+  private lateinit var context: Context
   private lateinit var packageManager: PackageManager
 
   override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
+    context = binding.applicationContext
+    packageManager = context.packageManager
     channel = MethodChannel(binding.binaryMessenger, "device_apps_plus")
     channel.setMethodCallHandler(this)
-    packageManager = binding.applicationContext.packageManager
   }
 
   override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
@@ -41,6 +45,22 @@ class DeviceAppsPlusPlugin : FlutterPlugin, MethodCallHandler {
           resultMap[pkg] = isInstalled(pkg)
         }
         result.success(resultMap)
+      }
+      "openApp" -> {
+        val packageName = call.argument<String>("package")
+        if (packageName == null) {
+          result.error("INVALID_ARGUMENT", "Missing 'package'", null)
+          return
+        }
+
+        val launchIntent = context.packageManager.getLaunchIntentForPackage(packageName)
+        if (launchIntent != null) {
+          launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+          context.startActivity(launchIntent)
+          result.success(true)
+        } else {
+          result.success(false)
+        }
       }
       else -> result.notImplemented()
     }

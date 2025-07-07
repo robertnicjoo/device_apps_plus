@@ -12,4 +12,8 @@ class DeviceAppsPlus {
   Future<Map<String, bool>> checkMultiple(List<String> packageNames) {
     return DeviceAppsPlusPlatform.instance.checkMultiple(packageNames);
   }
+
+  Future<bool> openApp(String packageName) {
+    return DeviceAppsPlusPlatform.instance.openApp(packageName);
+  }
 }

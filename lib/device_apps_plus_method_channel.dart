@@ -33,4 +33,12 @@ class MethodChannelDeviceAppsPlus extends DeviceAppsPlusPlatform {
     );
     return Map<String, bool>.from(result);
   }
+
+  @override
+  Future<bool> openApp(String packageName) async {
+    final result = await methodChannel.invokeMethod<bool>('openApp', {
+      'package': packageName,
+    });
+    return result ?? false;
+  }
 }

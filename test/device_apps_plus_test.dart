@@ -23,6 +23,11 @@ class MockDeviceAppsPlusPlatform
         pkg: pkg == "irando.co.id.holy_bible" || pkg == "com.facebook.katana",
     };
   }
+
+  @override
+  Future<bool> openApp(String packageName) async {
+    return packageName.contains("installed"); // Simulate only some apps are openable
+  }
 }
 
 void main() {
