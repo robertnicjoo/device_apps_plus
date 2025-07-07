@@ -1,6 +1,8 @@
 name: device_apps_plus
-description: "Made By PT. Nicxon International Solutions"
-version: 1.0.0
+description: >
+  A Flutter plugin to check if specific Android apps are installed on the device.
+  Useful for deep links, onboarding, or app linking.
+version: 1.0.1
 homepage: https://github.com/robertnicjoo/device_apps_plus
 repository: https://github.com/robertnicjoo/device_apps_plus
 issue_tracker: https://github.com/robertnicjoo/device_apps_plus/issues
